@@ -1,5 +1,5 @@
 # Getting Started with Create React App
-Disney+ Clone
+Disney+ Clone... Build using React, Redux, Firebase and Styled components. Google Auth is executed using Firebase to save users data.
 ![login-background](https://user-images.githubusercontent.com/82119082/192326879-511c19dd-7ae8-4838-9527-78466be7f375.jpg)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
