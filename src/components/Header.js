@@ -181,6 +181,7 @@ const NavMenu = styled.div`
   } */
 `;
 const Login = styled.a`
+  cursor: pointer;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 8px 16px;
   text-transform: uppercase;
