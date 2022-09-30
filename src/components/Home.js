@@ -1,23 +1,63 @@
-import React from "react";
+import { collection, doc, onSnapshot, query, getDoc } from "firebase/firestore";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { setMovies } from "../features/movie/movieSlice";
+import { selectUserName } from "../features/user/userSlice";
+import db from "../firebase";
 import ImgSlider from "./ImgSlider";
+import NewDisney from "./NewDisney";
+import Recommends from "./Recommends";
+import Viewers from "./Viewers";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const userName = useSelector(selectUserName);
+  let recommends = [];
+  let newDisney = [];
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      query(collection(db, "movies")),
+      (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          switch (doc.data().type) {
+            case "recommend":
+              recommends = [...recommends, { id: doc.id, ...doc.data() }];
+              break;
+            case "new":
+              newDisney = [...newDisney, { id: doc.id, ...doc.data() }];
+              break;
+          }
+        });
+        dispatch(
+          setMovies({
+            recommend: recommends,
+            newDisney: newDisney,
+          })
+        );
+      }
+    );
+  }, [userName]);
   return (
     <Container>
       <ImgSlider />
+      <Viewers />
+      <Recommends />
+      <NewDisney />
     </Container>
   );
 };
 const Container = styled.main`
   position: relative;
-  background: url("/images/home-background.png");
   min-height: calc(100vh - 250px);
   display: block;
+  overflow-x: hidden;
   top: 72px;
   padding: 0 calc(3.5vw + 5px);
   &:after {
-    background: url("/images/home-background.png") no-repeat center fixed;
+    background: url("/images/home-background.png") center center / cover
+      no-repeat fixed;
     position: absolute;
     content: "";
     inset: 0px;
