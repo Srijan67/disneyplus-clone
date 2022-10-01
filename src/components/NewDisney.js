@@ -7,7 +7,7 @@ const NewDisney = () => {
   const movies = useSelector(selectNewDisney);
   return (
     <Container>
-      <h4>Recommended for you</h4>
+      <h4>New in Disney</h4>
       <Content>
         {movies &&
           movies.map((movie, key) => (

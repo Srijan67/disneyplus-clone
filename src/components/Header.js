@@ -50,7 +50,6 @@ const Header = () => {
       })
     );
   };
-  console.log(" this is img link : ", userPhoto);
   return (
     <Nav>
       <Logo>
