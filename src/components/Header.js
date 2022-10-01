@@ -3,20 +3,20 @@ import styled from "styled-components";
 import { auth, provider } from "../firebase";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-// import { useHistory } from "react-router-dom";
 import {
   selectUserName,
   setUserLoginDetails,
   selectUserPhoto,
   setSignOutState,
 } from "../features/user/userSlice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userName = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
+  const location = useLocation();
   const handleAuth = () => {
     if (!userName) {
       signInWithPopup(auth, provider)
@@ -37,7 +37,7 @@ const Header = () => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user);
-        navigate("/home");
+        if (location.pathname === "/") navigate("/home");
       }
     });
   }, [userName]);
